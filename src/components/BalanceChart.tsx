@@ -183,7 +183,7 @@ const BalanceChart: React.FC = () => {
       <BalanceStats />
       
       <div className="balance-chart__container">
-        <ResponsiveContainer minHeight={400} minWidth={800}>
+        <ResponsiveContainer minHeight={400} width={'100%'}>
           <LineChart
             data={chartData}
             margin={{ top: 20, right: 30, left: 20, bottom: 20 }}

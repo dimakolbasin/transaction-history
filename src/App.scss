@@ -4,7 +4,8 @@
   flex-direction: column;
 
   &__table {
-    width: 950px;
+    //min-width: 950px;
+    width: 100%;
   }
 
   &__header {

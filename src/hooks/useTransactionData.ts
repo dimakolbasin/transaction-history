@@ -1,12 +1,9 @@
 import { useMemo } from 'react';
 import { format } from 'date-fns';
 import { ru } from 'date-fns/locale';
-import { Transaction, TransactionType, Currency } from '../types/transaction';
+import { TransactionType, Currency } from '../types/transaction';
 import { useTransactionStore } from '../stores/transactionStore';
 
-/**
- * Hook для форматирования транзакций
- */
 export const useFormattedTransactions = () => {
   const filteredTransactions = useTransactionStore(state => state.filteredTransactions);
 
@@ -20,9 +17,6 @@ export const useFormattedTransactions = () => {
   }, [filteredTransactions]);
 };
 
-/**
- * Hook для данных графика баланса
- */
 export const useBalanceChartData = () => {
   const stats = useTransactionStore(state => state.stats);
 
@@ -41,9 +35,6 @@ export const useBalanceChartData = () => {
   }, [stats]);
 };
 
-/**
- * Hook для статистики с форматированием
- */
 export const useFormattedStats = () => {
   const stats = useTransactionStore(state => state.stats);
 
@@ -63,9 +54,6 @@ export const useFormattedStats = () => {
   }, [stats]);
 };
 
-/**
- * Hook для получения уникальных валют из транзакций
- */
 export const useAvailableCurrencies = () => {
   const allTransactions = useTransactionStore(state => state.allTransactions);
 
@@ -78,9 +66,6 @@ export const useAvailableCurrencies = () => {
   }, [allTransactions]);
 };
 
-/**
- * Hook для диапазона дат транзакций
- */
 export const useDateRange = () => {
   const allTransactions = useTransactionStore(state => state.allTransactions);
 
@@ -100,9 +85,6 @@ export const useDateRange = () => {
   }, [allTransactions]);
 };
 
-/**
- * Hook для проверки состояния загрузки
- */
 export const useLoadingState = () => {
   return useTransactionStore(state => ({
     loadingState: state.loadingState,
@@ -113,13 +95,6 @@ export const useLoadingState = () => {
   }));
 };
 
-/**
- * Вспомогательные функции для форматирования
- */
-
-/**
- * Форматирует сумму в зависимости от валюты
- */
 function formatAmount(amount: number, currency: Currency): string {
   const formatters: Record<Currency, Intl.NumberFormatOptions> = {
     USD: { style: 'currency', currency: 'USD', minimumFractionDigits: 2 },
@@ -132,7 +107,6 @@ function formatAmount(amount: number, currency: Currency): string {
   const formatter = new Intl.NumberFormat('ru-RU', formatters[currency]);
   const formatted = formatter.format(amount);
 
-  // Добавляем символы для криптовалют
   if (currency === 'BTC') {
     return `${formatted} ₿`;
   }
@@ -143,9 +117,6 @@ function formatAmount(amount: number, currency: Currency): string {
   return formatted;
 }
 
-/**
- * Форматирует тип транзакции для отображения
- */
 function formatTransactionType(type: TransactionType): string {
   const typeLabels: Record<TransactionType, string> = {
     deposit: 'Пополнение',
@@ -156,9 +127,6 @@ function formatTransactionType(type: TransactionType): string {
   return typeLabels[type];
 }
 
-/**
- * Получает цвет для типа транзакции
- */
 export function getTransactionTypeColor(type: TransactionType): string {
   const colors: Record<TransactionType, string> = {
     deposit: 'success',
@@ -169,9 +137,6 @@ export function getTransactionTypeColor(type: TransactionType): string {
   return colors[type];
 }
 
-/**
- * Получает иконку для типа транзакции
- */
 export function getTransactionTypeIcon(type: TransactionType): string {
   const icons: Record<TransactionType, string> = {
     deposit: '↗️',
